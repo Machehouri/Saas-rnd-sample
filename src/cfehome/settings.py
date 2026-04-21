@@ -78,14 +78,13 @@ WSGI_APPLICATION = 'cfehome.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASES_URL= config("DATABASE_URL", cast=str)
+
+if DATABASES_URL is not None:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASES_URL)
     }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
