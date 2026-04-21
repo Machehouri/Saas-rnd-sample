@@ -21,3 +21,24 @@ def home_page_view(request, *args, **kwargs):
     html_template = "home.html"
     PageVisit.objects.create(path=request.path)
     return render(request, html_template, my_context)
+
+def about_view(request, *args, **kwargs):
+    qs = PageVisit.objects.all()
+    page_qs = PageVisit.objects.filter(path=request.path)
+    try:
+        percent = (page_qs.count() * 100.0) / qs.count(),
+    except:
+        percent = 0
+    my_title = "My About Page"
+    my_context = {
+        "page_title": my_title,
+        "page_visits_count": page_qs.count(),
+        "percent": percent,
+        "total_visits_count": qs.count(),
+        
+    }
+    path = request.path
+    print("path", path)
+    html_template = "home.html"
+    PageVisit.objects.create(path=request.path)
+    return render(request, html_template, my_context)
