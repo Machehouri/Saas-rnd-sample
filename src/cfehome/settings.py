@@ -24,8 +24,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = str(os.environ.get("DJANGO_FEBUG")).lower() =="true"
-DEBUG = config("DJANGO_FEBUG")
-print("DEBUG", DEBUG, type(DEBUG))
+DEBUG = config("DJANGO_FEBUG", cast=bool)
 
 ALLOWED_HOSTS = [".railway.app"
                  ]
@@ -80,7 +79,7 @@ WSGI_APPLICATION = 'cfehome.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 CONN_MAX_AGE = config("CONN_MAX_AGE", default=30, cast=int)
-DATABASES_URL= config("DATABASE_URL", cast=str)
+DATABASES_URL= config("DATABASE_URL", default=None)
 
 if DATABASES_URL is not None:
     import dj_database_url
